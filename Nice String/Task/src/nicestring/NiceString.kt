@@ -1,26 +1,19 @@
 package nicestring
 
-import java.util.*
-
 fun String.isNice(): Boolean {
-    val condition1 = if (notContainsBUBABE) 1 else 0
-    val condition2 = if (containsAtLeastThreeVowels) 1 else 0
-    val condition3 = if (containsDoubleLetter) 1 else 0
-    val sum = condition1 + condition2 + condition3
-    //println("$sum = $condition1 + $condition2 + $condition3")
-    return sum > 1
+    return listOf(notContainsBUBABE, containsAtLeastThreeVowels, containsDoubleLetter).count { it } >= 2
 }
 
 val String.notContainsBUBABE: Boolean
-    get() = setOf("ba","be","bu").none { this.contains(it) }
+    get() = setOf("ba", "be", "bu").none { this.contains(it) }
 
 val String.containsAtLeastThreeVowels: Boolean
-    get() = this.toCharArray().count { vowelsArray.contains(it) } >= 3
+    get() = this.count { it in vowelsSet } >= 3
 
 val String.containsDoubleLetter: Boolean
-    get() = this.zipWithNext().any { it.first == it.second }
+    get() = this.zipWithNext().any { it.first == it.second } //could also use windowed(2) instead of zipWithNext
 
-val vowelsArray get() = setOf('a', 'e', 'i', 'o', 'u')
+val vowelsSet get() = setOf('a', 'e', 'i', 'o', 'u')
 
 fun main() {
     "aei".isNice() eq true
