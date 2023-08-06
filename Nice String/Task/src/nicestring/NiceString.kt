@@ -12,7 +12,7 @@ fun String.isNice(): Boolean {
 }
 
 val String.notContainsBUBABE: Boolean
-    get() = setOf("ba","be","bu").all { !this.contains(it) }
+    get() = setOf("ba","be","bu").none { this.contains(it) }
 
 val String.containsAtLeastThreeVowels: Boolean
     get() = this.toCharArray().count { vowelsArray.contains(it) } >= 3
