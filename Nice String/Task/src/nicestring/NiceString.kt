@@ -12,13 +12,10 @@ fun String.isNice(): Boolean {
 }
 
 val String.notContainsBUBABE: Boolean
-    get() = !this.contains("bu", ignoreCase = true) &&
-            !this.contains("ba", ignoreCase = true) &&
-            !this.contains("be", ignoreCase = true)
+    get() = setOf("ba","be","bu").all { !this.contains(it) }
 
 val String.containsAtLeastThreeVowels: Boolean
-    get() = this.lowercase(Locale.getDefault())
-        .toCharArray().count { vowelsArray.contains(it) } >= 3
+    get() = this.toCharArray().count { vowelsArray.contains(it) } >= 3
 
 val String.containsDoubleLetter: Boolean
     get() = this.zipWithNext().any { it.first == it.second }
