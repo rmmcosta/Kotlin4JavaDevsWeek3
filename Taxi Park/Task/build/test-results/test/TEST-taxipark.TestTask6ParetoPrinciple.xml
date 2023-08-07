@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="taxipark.TestTask6ParetoPrinciple" tests="11" skipped="0" failures="0" errors="0" timestamp="2023-08-07T11:26:00" hostname="OS-7MF97D3" time="0.045">
+<testsuite name="taxipark.TestTask6ParetoPrinciple" tests="11" skipped="0" failures="0" errors="0" timestamp="2023-08-07T13:55:16" hostname="OS-7MF97D3" time="0.04">
   <properties/>
-  <testcase name="test1" classname="taxipark.TestTask6ParetoPrinciple" time="0.039"/>
-  <testcase name="test2" classname="taxipark.TestTask6ParetoPrinciple" time="0.0"/>
-  <testcase name="test3" classname="taxipark.TestTask6ParetoPrinciple" time="0.001"/>
+  <testcase name="test1" classname="taxipark.TestTask6ParetoPrinciple" time="0.034"/>
+  <testcase name="test2" classname="taxipark.TestTask6ParetoPrinciple" time="0.001"/>
+  <testcase name="test3" classname="taxipark.TestTask6ParetoPrinciple" time="0.0"/>
   <testcase name="test4" classname="taxipark.TestTask6ParetoPrinciple" time="0.0"/>
   <testcase name="test5" classname="taxipark.TestTask6ParetoPrinciple" time="0.0"/>
   <testcase name="test7" classname="taxipark.TestTask6ParetoPrinciple" time="0.001"/>
-  <testcase name="test8" classname="taxipark.TestTask6ParetoPrinciple" time="0.001"/>
+  <testcase name="test8" classname="taxipark.TestTask6ParetoPrinciple" time="0.0"/>
   <testcase name="test9" classname="taxipark.TestTask6ParetoPrinciple" time="0.001"/>
-  <testcase name="testParetoPrincipleFails" classname="taxipark.TestTask6ParetoPrinciple" time="0.0"/>
+  <testcase name="testParetoPrincipleFails" classname="taxipark.TestTask6ParetoPrinciple" time="0.001"/>
   <testcase name="testParetoPrincipleNoTrips" classname="taxipark.TestTask6ParetoPrinciple" time="0.001"/>
   <testcase name="testParetoPrincipleSucceeds" classname="taxipark.TestTask6ParetoPrinciple" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
