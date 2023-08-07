@@ -35,8 +35,7 @@ fun TaxiPark.findSmartPassengers(): Set<Passenger> {
     val countTripsPerPassenger =
         allPassengers.associateWith { passenger -> trips.count { trip -> trip.passengers.contains(passenger) } }
     val passengersHadDiscounts =
-        trips.filter { trip -> (trip.discount ?: 0.0) > 0.0 }.flatMap { trip -> trip.passengers }
-            .toSet()
+        trips.filter { trip -> (trip.discount ?: 0.0) > 0.0 }.flatMap { trip -> trip.passengers }.toSet()
     val tripsWithDiscounts = trips.filter { (it.discount ?: 0.0) > 0.0 }
     val countTripsWithDiscountPerPassenger = passengersHadDiscounts.associateWith { passenger ->
         tripsWithDiscounts.count { trip ->
@@ -48,8 +47,7 @@ fun TaxiPark.findSmartPassengers(): Set<Passenger> {
 
     fun hasMoreTripsWithDiscount(
         passenger: Passenger
-    ) = (countTripsWithDiscountPerPassenger[passenger] ?: 0).toDouble()
-        .div(countTripsPerPassenger[passenger]!!) > 0.5
+    ) = (countTripsWithDiscountPerPassenger[passenger] ?: 0).toDouble().div(countTripsPerPassenger[passenger]!!) > 0.5
 
     return allPassengers.filter { passenger ->
         hasMoreTripsWithDiscount(passenger)
@@ -58,14 +56,14 @@ fun TaxiPark.findSmartPassengers(): Set<Passenger> {
 
 fun TaxiPark.findSmartPassengers2(): Set<Passenger> {
     val tripsWithDiscounts = trips.filter { (it.discount ?: 0.0) > 0.0 }
-    val countTripsWithDiscountPerPassenger = tripsWithDiscounts
-        .flatMap { it.passengers }
-        .groupingBy { it }
-        .eachCount()
+    val countTripsWithDiscountPerPassenger = tripsWithDiscounts.flatMap { it.passengers }.groupingBy { it }.eachCount()
 
     return allPassengers.filter { passenger ->
-        countTripsWithDiscountPerPassenger.getOrDefault(passenger, 0) * 2 >
-                trips.count { it.passengers.contains(passenger) }
+        countTripsWithDiscountPerPassenger.getOrDefault(passenger, 0) * 2 > trips.count {
+            it.passengers.contains(
+                passenger
+            )
+        }
     }.toSet()
 }
 
@@ -74,7 +72,25 @@ fun TaxiPark.findSmartPassengers2(): Set<Passenger> {
  * Return any period if many are the most frequent, return `null` if there're no trips.
  */
 fun TaxiPark.findTheMostFrequentTripDurationPeriod(): IntRange? {
-    return TODO()
+    if (trips.isEmpty()) {
+        return null
+    }
+    val effectiveMaxTripDuration = trips.maxOf { it.duration }
+    val maxTripRange = effectiveMaxTripDuration + effectiveMaxTripDuration % 10
+    val timeKeysSet = buildTimeKeysSet(maxTripRange)
+    val countTripsPerTimeKeys =
+        timeKeysSet.associateWith { time -> trips.count { trip -> trip.duration in time.first..time.last } }
+    return countTripsPerTimeKeys.maxBy { it.value }.key
+}
+
+private fun buildTimeKeysSet(maxDuration: Int): Set<IntRange> {
+    val timeKeys = mutableSetOf<IntRange>()
+    var previousStep = 0
+    (9..maxDuration step 10).forEach { currentStep ->
+        timeKeys += IntRange(previousStep, currentStep)
+        previousStep = currentStep + 1
+    }
+    return timeKeys.toSet()
 }
 
 /*
@@ -83,4 +99,10 @@ fun TaxiPark.findTheMostFrequentTripDurationPeriod(): IntRange? {
  */
 fun TaxiPark.checkParetoPrinciple(): Boolean {
     TODO()
+}
+
+fun main() {
+    //build 10 minute periods
+    println(buildTimeKeysSet(100))
+    println("${35 + 35 % 10}")
 }
