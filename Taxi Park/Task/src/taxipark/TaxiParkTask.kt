@@ -98,7 +98,18 @@ private fun buildTimeKeysSet(maxDuration: Int): Set<IntRange> {
  * Check whether 20% of the drivers contribute 80% of the income.
  */
 fun TaxiPark.checkParetoPrinciple(): Boolean {
-    TODO()
+    if (trips.isEmpty()) {
+        return false
+    }
+    val income80 = trips.sumOf { it.cost } * 0.8
+    val incomePerDriver =
+        allDrivers.associateWith { driver ->
+            trips.filter { trip -> trip.driver == driver }.sumOf { trip -> trip.cost }
+        }
+    val listIncomes = incomePerDriver.map { it.value }
+    val topNumber = (listIncomes.size * 0.2).toInt()
+    val topIncomes = listIncomes.sortedDescending().take(topNumber).sum()
+    return topIncomes >= income80
 }
 
 fun main() {
