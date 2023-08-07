@@ -45,12 +45,14 @@ fun TaxiPark.findSmartPassengers(): Set<Passenger> {
             )
         }
     }
-    //println("count trips per passenger: $countTripsPerPassenger")
-    //println("passenger that had discounts: $passengersHadDiscounts")
-    //println("count trips with discount per passenger: $countTripsWithDiscountPerPassenger")
+
+    fun hasMoreTripsWithDiscount(
+        passenger: Passenger
+    ) = (countTripsWithDiscountPerPassenger[passenger] ?: 0).toDouble()
+        .div(countTripsPerPassenger[passenger]!!) > 0.5
+
     return allPassengers.filter { passenger ->
-        (countTripsWithDiscountPerPassenger[passenger] ?: 0).toDouble()
-            .div(countTripsPerPassenger[passenger]!!) > 0.5
+        hasMoreTripsWithDiscount(passenger)
     }.toSet()
 }
 
